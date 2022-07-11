@@ -4,6 +4,20 @@ usage="[USAGE]: runcpp [file]		-- compile and execute file with input from input
    [OR]: runcpp clean		-- delete input.txt and a.out if they exist
    [OR]: runcpp -h | --help	-- print this help mesaage and exit"
 
+
+if [ $# -eq 2 ]; then
+  if [ "$1" == "template" ]; then
+    if [ ! -e $2 ]; then
+      echo "[ERROR] $2 not found."
+      exit
+    fi
+    cat $TEMPLATE_PATH > $2
+  else
+    echo "[ERROR] invalid command."
+  fi
+  exit
+fi
+
 if [ ! $# -eq 1 ]; then
 	echo "Invalid usage! \n"
 	echo "$usage"
@@ -25,10 +39,9 @@ else
 		exit
 	fi
   if [ ! -e input.txt ]; then
-    echo "[ERROR] input.txt not found"
+    echo "[ERROR] input.txt not found."
     exit
   fi
 	g++ -DLOCAL $1
 	./a.out
 fi
-
